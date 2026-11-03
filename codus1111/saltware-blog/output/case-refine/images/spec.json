@@ -1,0 +1,11 @@
+[
+  {"name": "thumbnail", "type": "thumbnail", "series": "고객 사례", "title": "리파인<br>모바일 개발자 없이", "sub": "서버 개발팀이 모바일 서비스를 만든 방법"},
+  {"name": "img-01", "type": "steps", "title": "리파인이 거쳐 온 길", "items": [
+    ["자체 서버", "온프레미스에서<br>서비스 운영"], ["국내 클라우드", "기능·성능<br>문제 발생"], ["AWS", "개인정보 빼고<br>대부분 이전"]
+  ]},
+  {"name": "img-02", "type": "compare", "title": "직접 만들 것과 맡길 것", "cols": [
+    {"icon": "🛠", "head": "직접 만들면", "bad": ["모바일 개발자 채용", "백엔드 서버 구축", "배포 과정 수작업"]},
+    {"icon": "☁️", "head": "Amplify로", "on": true, "good": ["기존 서버 개발자가 개발", "백엔드는 설정으로 연결", "배포는 Amplify Console로"]}
+  ]},
+  {"name": "img-03", "type": "quote", "text": "사람을 뽑기 전에<br><span>맡길 수 있는 일부터</span>", "sub": "리파인 사례에서 얻은 한 줄"}
+]

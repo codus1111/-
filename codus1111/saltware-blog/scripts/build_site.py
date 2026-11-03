@@ -1,4 +1,4 @@
-"""output/ 아래 글을 모아 동작하는 블로그 사이트를 만든다.
+"""output/ 아래 글을 모아 동작하는 블로그 사이트를 만든다. 글 읽기는 이 파일, 화면은 theme.py가 맡는다.
 
 디자인은 솔트웨어 홈페이지(saltware.co.kr)를 따른다.
 베이지 톤온톤이 바탕이고, 검정은 버튼 같은 작은 포인트에만 쓴다. 영문 대문자 라벨, 넓은 여백, 인사이트 메가 메뉴.
@@ -21,6 +21,7 @@ CATS = [
     ("spoon", "데이터 한 스푼", "DATA SPOON", "데이터 용어 하나를 일상의 비유로 쉽게 풉니다."),
     ("note", "데이터 노트", "DATA NOTE", "기업이 AI와 데이터를 쓰다 부딪히는 문제를 한 편씩 짚습니다."),
     ("case", "고객 사례", "CUSTOMER STORY", "고객사와 함께 한 도입 과정과 달라진 점을 정리합니다."),
+    ("guide", "솔루션 가이드", "SOLUTION GUIDE", "솔트웨어의 다섯 사업 영역을 문제, 동작 방식, 도입 단계, 자주 묻는 질문까지 자세히 풉니다."),
 ]
 CAT_BY_NAME = {name: key for key, name, _, _ in CATS}
 EYEBROW = {key: eb for key, _, eb, _ in CATS}
@@ -109,6 +110,9 @@ def load_posts():
             "minutes": max(1, round(len(plain) / 500)),
             "body_html": body_html,
             "toc": toc,
+            "points": [x.strip() for x in meta.get("points", "").split("|") if x.strip()],
+            "highlight": meta.get("highlight", ""),
+            "cover": meta.get("cover", "") or re.sub(r"^\[[^\]]+\]\s*", "", title).split()[0],
         })
     return sorted(posts, key=lambda p: (p["date"], p["slug"]), reverse=True)
 
@@ -211,13 +215,15 @@ footer.bottom{background:var(--deep);color:var(--muted);margin-top:120px;border-
  .wrap,.nav,.foot,.copy{padding-left:20px;padding-right:20px}
  .nav{height:64px;gap:16px}.logo{font-size:23px}.logo small{display:none}
  .burger{display:flex}.tools .pill{display:none}
- .menu{position:fixed;inset:64px 0 0 0;background:var(--bg);flex-direction:column;gap:0;height:auto;padding:12px 20px 40px;overflow:auto;display:none}
+ header.top{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg)}
+ .menu{position:fixed;top:64px;left:0;right:0;height:calc(100dvh - 64px);z-index:39;background:var(--bg);flex-direction:column;gap:0;padding:12px 20px 40px;overflow-y:auto;display:none;border-top:1px solid var(--line)}
  .menu.open{display:flex}
  .menu>div,.menu>a{height:auto}
  .menu .lnk{font-size:22px;font-weight:700;padding:18px 0;width:100%;text-align:left;border-bottom:1px solid var(--line)}
  .menu .lnk:after{display:none}
  .mega{display:none}
- .menu .m-cta{margin-top:28px}
+ .menu .m-cta{margin-top:28px;flex:none;align-self:flex-start;height:52px;padding:0 26px}
+ .menu .lnk{flex:none}
  .foot{grid-template-columns:1fr 1fr}
 }
 @media (min-width:901px){.menu .m-cta{display:none}}
@@ -225,8 +231,9 @@ footer.bottom{background:var(--deep);color:var(--muted);margin-top:120px;border-
 
 BASE_JS = """
 function toast(m){var t=document.querySelector('.toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove('show')},2200)}
-(function(){var b=document.querySelector('.burger'),m=document.querySelector('.menu');
-b.addEventListener('click',function(){var o=m.classList.toggle('open');b.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':''});
+(function(){var b=document.querySelector('.burger'),m=document.querySelector('.menu'),MENU_ICON=b.innerHTML;
+b.addEventListener('click',function(){var o=m.classList.toggle('open');b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'메뉴 닫기':'메뉴 열기');b.innerHTML=o?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6 6 18"/></svg>':MENU_ICON;document.body.style.overflow=o?'hidden':''});
+addEventListener('resize',function(){if(innerWidth>900&&m.classList.contains('open')){b.click()}});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.activeElement&&document.activeElement.blur()}})})();
 """
 
@@ -648,11 +655,9 @@ def build_contact(latest):
 
 
 def main():
+    import theme  # 화면 디자인은 theme.py에 있다
     posts = load_posts()
-    build_home(posts, load_upcoming())
-    for p in posts:
-        build_post(p, posts)
-    build_contact(posts[0] if posts else None)
+    theme.build(posts)
     print(f"사이트 생성 완료: 글 {len(posts)}편, index.html, contact.html")
 
 

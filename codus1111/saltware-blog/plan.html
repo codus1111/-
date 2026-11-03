@@ -1,0 +1,196 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0D0D0D"><title>기획 노트 | 솔트웨어 인사이트</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap"><style>
+:root{--bg:#0D0D0D;--panel:#141414;--panel2:#1B1B1B;--line:#262626;--line2:#333;--text:#F2F2F2;--text2:#C4C4C4;--muted:#8C8C8C;
+--o:#F49F20;--o2:#E8811A;--o-soft:rgba(244,159,32,.12);--mono:'IBM Plex Mono','Pretendard Variable',Pretendard,ui-monospace,monospace;--w:1240px;--ease:cubic-bezier(.2,.7,.2,1)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Pretendard Variable',Pretendard,-apple-system,'Malgun Gothic',sans-serif;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;word-break:keep-all}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}button,input,select,textarea{font:inherit;color:inherit}
+::selection{background:var(--o);color:#000}:focus-visible{outline:2px solid var(--o);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--w);margin:0 auto;padding:0 40px}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.o{color:var(--o)}
+.btn{display:inline-flex;align-items:center;gap:10px;height:46px;padding:0 22px;border-radius:999px;font-weight:700;font-size:15px;border:1px solid var(--line2);background:transparent;cursor:pointer;transition:.2s}
+.btn:hover{border-color:var(--text)}.btn.fill{background:var(--o);border-color:var(--o);color:#0D0D0D}.btn.fill:hover{background:#FFB548;border-color:#FFB548}
+.arr{transition:transform .25s var(--ease);display:inline-block}a:hover .arr,button:hover .arr{transform:translateX(4px)}
+/* 머리글 */
+.top{position:sticky;top:0;z-index:50;background:rgba(13,13,13,.92);border-bottom:1px solid var(--line)}
+.nav{max-width:var(--w);margin:0 auto;padding:0 40px;height:72px;display:flex;align-items:center;gap:48px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:25px;letter-spacing:-.045em;color:var(--text)}
+.logo i{width:21px;height:21px;flex:none;background:radial-gradient(circle,var(--o) 4.4px,transparent 4.8px) 0 0/10.5px 10.5px}
+.logo small{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.14em;color:var(--muted);margin-left:6px}
+.menu{display:flex;gap:30px;align-items:center}
+.menu a{font-size:15px;color:var(--text2);padding:6px 0;position:relative}.menu a:hover{color:var(--text)}
+.menu a.on{color:var(--text)}.menu a.on:before{content:"";position:absolute;left:-12px;top:50%;width:5px;height:5px;margin-top:-2.5px;border-radius:50%;background:var(--o)}
+.dd{position:relative;display:flex;align-items:center}
+.dd-b{display:flex;align-items:center;gap:6px;background:none;border:0;padding:6px 0;font-size:15px;color:var(--text2);cursor:pointer;position:relative}
+.dd-b:hover,.dd:hover .dd-b,.dd-b[aria-expanded=true]{color:var(--text)}.dd-b svg{transition:transform .2s}.dd:hover .dd-b svg,.dd-b[aria-expanded=true] svg{transform:rotate(180deg)}
+.dd-b.on{color:var(--text)}.dd-b.on:before{content:"";position:absolute;left:-12px;top:50%;width:5px;height:5px;margin-top:-2.5px;border-radius:50%;background:var(--o)}
+.dd-m{position:absolute;top:100%;left:-18px;min-width:180px;padding:8px;margin-top:14px;background:var(--panel);border:1px solid var(--line2);border-radius:14px;box-shadow:0 24px 48px -16px rgba(0,0,0,.6);
+opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .18s,transform .18s var(--ease),visibility .18s}
+.dd-m:before{content:"";position:absolute;left:0;right:0;top:-16px;height:16px}
+.dd:hover .dd-m,.dd:focus-within .dd-m,.dd.open .dd-m{opacity:1;visibility:visible;transform:none}
+.menu .dd-m a{display:block;padding:10px 12px;border-radius:8px;font-size:14.5px;white-space:nowrap}.menu .dd-m a:hover{background:var(--panel2);color:var(--text)}
+.menu .dd-m a.on{color:var(--o)}.menu .dd-m a.on:before{display:none}
+.dr-h{padding:28px 0 4px;color:var(--o)}
+.tools{margin-left:auto;display:flex;gap:10px;align-items:center}
+.ib{width:44px;height:44px;border-radius:50%;border:1px solid var(--line2);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text)}
+.ib:hover{border-color:var(--text)}.burger{display:none}
+.drawer{display:none;position:fixed;top:64px;left:0;right:0;bottom:0;z-index:49;background:var(--bg);padding:20px;overflow-y:auto}
+.drawer.open{display:block}.drawer a{display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:1px solid var(--line);font-size:22px;font-weight:700}
+.drawer a span{font-family:var(--mono);font-size:12px;color:var(--muted);font-weight:400}.drawer .btn{margin-top:28px;width:100%;justify-content:center;font-size:16px;border-bottom:1px solid var(--o)}
+/* 바닥글 */
+.foot{border-top:1px solid var(--line);margin-top:140px}
+.foot .wrap{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;padding-top:64px;padding-bottom:48px;font-size:14.5px;color:var(--muted)}
+.foot p{margin:18px 0 0;line-height:1.7;max-width:320px}.foot b{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:var(--text2);margin-bottom:16px;font-weight:500}
+.foot a:not(.logo){display:block;margin:10px 0}.foot a:hover{color:var(--o)}
+.copy{border-top:1px solid var(--line)}.copy .wrap{padding-top:20px;padding-bottom:36px;font-family:var(--mono);font-size:11.5px;color:#5E5E5E;letter-spacing:.04em}
+.toast{position:fixed;left:50%;bottom:30px;max-width:calc(100vw - 32px);white-space:nowrap;transform:translate(-50%,14px);background:var(--o);color:#000;font-weight:700;padding:12px 22px;border-radius:999px;font-size:14.5px;opacity:0;transition:.25s;pointer-events:none;z-index:70}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+/* 글자 표지 */
+.kw{position:relative;overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:18px;display:flex;align-items:flex-end;isolation:isolate}
+.kw:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at var(--gx,78%) var(--gy,22%),rgba(244,159,32,.38),rgba(244,159,32,0) 46%),
+ repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 64px),repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 64px)}
+.kw b{font-weight:800;letter-spacing:-.06em;line-height:.82;color:var(--text);padding:0 0 .08em .06em;white-space:nowrap}
+.kw b:after{content:".";color:var(--o)}
+.kw .tag{position:absolute;top:18px;left:20px}.kw .num{position:absolute;top:18px;right:20px}
+.todo{color:#FF6B5B;font-weight:600}
+@media (max-width:1080px){.nav{gap:32px}.menu{gap:22px}.logo small{display:none}}
+@media (max-width:400px){.wrap,.nav{padding:0 16px!important}.logo{font-size:21px}.logo i{width:18px;height:18px;background-size:9px 9px}.ib{width:40px;height:40px}}
+@media (max-width:780px){.wrap,.nav{padding:0 20px}.nav{height:64px}.menu,.tools .btn{display:none}.burger{display:flex}.foot .wrap{grid-template-columns:1fr 1fr}}
+
+.pl-h{padding:64px 0 36px;border-bottom:1px solid var(--line)}
+.pl-h h1{font-size:clamp(30px,3.6vw,46px);line-height:1.15;letter-spacing:-.045em;margin:14px 0 0;font-weight:800}
+.toc-p{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}.toc-p a{height:38px;display:inline-flex;align-items:center;gap:8px;padding:0 16px;border:1px solid var(--line2);border-radius:999px;font-size:14px;color:var(--text2)}
+.toc-p a:hover{border-color:var(--o);color:var(--text)}.toc-p a span{font-family:var(--mono);font-size:11px;color:var(--o)}
+.ps{padding-top:104px;scroll-margin-top:72px}
+.ps>.mono{display:block}.ps h2{font-size:clamp(28px,3.6vw,46px);letter-spacing:-.045em;line-height:1.15;margin:12px 0 14px}
+.ps .lede{margin:0 0 36px;color:var(--muted);font-size:16px;line-height:1.7;max-width:640px}
+.gap{border:1px solid var(--o);border-radius:18px;padding:28px 32px;background:var(--o-soft);font-size:20px;line-height:1.6;letter-spacing:-.02em;font-weight:600;margin-bottom:36px}
+.gap .mono{display:block;color:var(--o);margin-bottom:10px}
+.tw{border:1px solid var(--line);border-radius:18px;overflow-x:auto}
+table.cmp{width:100%;border-collapse:collapse;font-size:15px;min-width:560px}
+.cmp th,.cmp td{padding:16px 18px;text-align:left;border-bottom:1px solid var(--line)}.cmp tr:last-child td{border-bottom:0}
+.cmp th{font-family:var(--mono);font-weight:500;font-size:11.5px;letter-spacing:.08em;color:var(--muted)}
+.cmp td:first-child{color:var(--text2)}.cmp .me{color:var(--o)}.cmp td.me{font-weight:700}
+.cmp .no{color:var(--muted)}
+.note{margin:12px 0 0;font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.02em;line-height:1.7}
+.series{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-top:28px}
+.series div{background:var(--bg);padding:24px}.series b{display:block;font-size:18px;letter-spacing:-.02em;margin:10px 0 8px}.series p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+.series .st{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--o)}
+.flag{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 12px;border-radius:999px;border:1px dashed var(--o);color:var(--o);font-size:13px;font-weight:600;margin-bottom:24px}
+.pg{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.pc{border:1px solid var(--line);border-radius:18px;background:var(--panel);padding:24px;display:flex;flex-direction:column;cursor:pointer;transition:border-color .2s;text-align:left;color:inherit}
+.pc:hover{border-color:var(--line2)}.pc.on{border-color:var(--o)}
+.pc .av{width:48px;height:48px;border-radius:50%;background:var(--panel2);border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:var(--o)}
+.pc.on .av{background:var(--o);color:#0D0D0D;border-color:var(--o)}
+.pc h3{font-size:20px;letter-spacing:-.03em;margin:18px 0 4px}.pc .rl{font-size:14px;color:var(--text2)}.pc .og{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:.04em}
+.pc q{display:block;margin:20px 0;padding-left:14px;border-left:2px solid var(--o);font-size:15.5px;line-height:1.6;color:var(--text);quotes:"“" "”"}
+.pc dl{margin:0;font-size:14px;line-height:1.6}.pc dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--muted);margin-top:14px}.pc dd{margin:4px 0 0;color:var(--text2)}
+.pc .rd{margin-top:auto;padding-top:18px}.pc .rd a{display:block;font-size:13.5px;color:var(--text2);padding:6px 0;border-top:1px solid var(--line)}.pc .rd a:hover{color:var(--o)}
+.jm{border:1px solid var(--line);border-radius:22px;background:var(--panel);padding:28px 28px 8px}
+.jt{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.jt button{height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--line2);background:transparent;font-size:14px;color:var(--text2);cursor:pointer}
+.jt button:hover{color:var(--text);border-color:var(--text2)}.jt button[aria-selected=true]{background:var(--o);color:#0D0D0D;border-color:var(--o);font-weight:700}
+.chart{position:relative}.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.yl{position:absolute;left:0;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-between;padding:10px 0 22px;font-family:var(--mono);font-size:10.5px;color:var(--muted);pointer-events:none}
+.sx{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);margin-top:4px}
+.sx div{text-align:center;padding:14px 4px}.sx b{display:block;font-size:16px;letter-spacing:-.02em}.sx span{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.08em}
+.sg{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-top:16px}
+.sc{background:var(--bg);padding:22px 18px;display:flex;flex-direction:column;gap:18px}
+.sc .hd{display:flex;align-items:baseline;gap:8px}.sc .hd b{font-size:18px}.sc .hd span{font-family:var(--mono);font-size:11px;color:var(--o)}
+.sc h4{margin:0 0 6px;font-family:var(--mono);font-weight:500;font-size:10.5px;letter-spacing:.1em;color:var(--muted)}
+.sc p{margin:0;font-size:14px;line-height:1.6;color:var(--text2)}
+.sc .th{color:var(--text);font-weight:600}.sc .th:before{content:attr(data-e);display:inline-block;margin-right:8px;padding:1px 8px;border:1px solid rgba(244,159,32,.45);border-radius:999px;font-size:11.5px;color:var(--o);vertical-align:1px}
+.sc a{display:block;font-size:13.5px;line-height:1.5;color:var(--text2);padding:5px 0;border-top:1px solid var(--line)}.sc a:first-of-type{border-top:0;padding-top:0}.sc a:hover{color:var(--o)}
+.sc .kp{font-family:var(--mono);font-size:12px;color:var(--o);line-height:1.6}
+table.mt{width:100%;border-collapse:collapse;font-size:15px;min-width:620px}
+.mt th,.mt td{padding:16px 18px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}.mt tr:last-child td{border-bottom:0}
+.mt th{font-family:var(--mono);font-weight:500;font-size:11.5px;letter-spacing:.08em;color:var(--muted)}
+.mt td:first-child{font-weight:700;white-space:nowrap}.mt td:nth-child(3){color:var(--o);font-weight:700;white-space:nowrap}.mt td:nth-child(4){color:var(--muted);font-size:13.5px}
+.nx{margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.nx div{border:1px solid var(--line);border-radius:16px;padding:22px;font-size:14.5px;line-height:1.65;color:var(--text2)}.nx b{display:block;color:var(--text);font-size:16px;margin-bottom:6px}
+@media (max-width:1100px){.pg{grid-template-columns:1fr 1fr}.series{grid-template-columns:1fr 1fr}.sg{grid-template-columns:1fr}.sc{display:grid;grid-template-columns:120px 1fr 1fr;gap:14px 20px}.sc .hd{grid-column:1/-1}}
+@media (max-width:760px){.pl-h{padding:40px 0 28px}.ps{padding-top:72px}.gap{font-size:17px;padding:22px}.pg{grid-template-columns:1fr}.series{grid-template-columns:1fr}
+.jm{padding:20px 14px 4px;border-radius:18px}.sx b{font-size:13px}.sx span{display:none}.sc{grid-template-columns:1fr}.nx{grid-template-columns:1fr}.yl{display:none}}
+@media print{:root{--bg:#fff;--panel:#fff;--panel2:#f3f3f3;--line:#ddd;--line2:#ccc;--text:#111;--text2:#333;--muted:#666;--o-soft:#fff6ea}
+.top,.drawer,.foot,.toc-p,.jt{display:none}.ps{padding-top:40px;break-inside:avoid}.pc,.sc,.jm{break-inside:avoid}}
+</style></head><body>
+<header class="top"><div class="nav">
+<a class="logo" href="index.html" aria-label="솔트웨어 인사이트 홈"><i></i>saltware<small>INSIGHTS</small></a>
+<nav class="menu" aria-label="주요 메뉴"><div class="dd"><button type="button" class="dd-b" aria-expanded="false">Series <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m2 3.5 3 3 3-3"/></svg></button><div class="dd-m"><a href="index.html" data-cat="all" class="">인사이트</a><a href="index.html?cat=spoon#archive" data-cat="spoon" class="">데이터 한 스푼</a><a href="index.html?cat=note#archive" data-cat="note" class="">데이터 노트</a><a href="index.html?cat=case#archive" data-cat="case" class="">고객 사례</a><a href="index.html?cat=guide#archive" data-cat="guide" class="">솔루션 가이드</a></div></div><div class="dd"><button type="button" class="dd-b" aria-expanded="false">Saltware <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m2 3.5 3 3 3-3"/></svg></button><div class="dd-m"><a href="https://www.saltware.co.kr" target="_blank" rel="noopener">회사 홈페이지 ↗</a><a href="https://www.youtube.com/@saltware_youtube" target="_blank" rel="noopener">유튜브 ↗</a><a href="https://fitcloud.github.io/" target="_blank" rel="noopener">기술 블로그 ↗</a></div></div><div class="dd"><button type="button" class="dd-b on" aria-expanded="false">Contact <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m2 3.5 3 3 3-3"/></svg></button><div class="dd-m"><a href="contact.html">문의하기</a><a href="index.html#newsletter">뉴스레터</a><a href="plan.html">기획 노트</a></div></div></nav>
+<div class="tools"><a class="ib search-btn" href="index.html?focus=search#archive" aria-label="검색"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></a>
+<a class="btn" href="contact.html">문의하기 <span class="arr o">→</span></a>
+<button class="ib burger" aria-label="메뉴" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8h16M4 16h16"/></svg></button></div></div></header>
+<nav class="drawer" aria-label="모바일 메뉴"><div class="dr-h mono">SERIES</div><a href="index.html">인사이트<span>ALL</span></a><a href="index.html?cat=spoon#archive">데이터 한 스푼<span>DATA SPOON</span></a><a href="index.html?cat=note#archive">데이터 노트<span>DATA NOTE</span></a><a href="index.html?cat=case#archive">고객 사례<span>CUSTOMER STORY</span></a><a href="index.html?cat=guide#archive">솔루션 가이드<span>SOLUTION GUIDE</span></a><div class="dr-h mono">SALTWARE</div><a href="https://www.saltware.co.kr" target="_blank" rel="noopener">회사 홈페이지<span>↗</span></a><a href="https://www.youtube.com/@saltware_youtube" target="_blank" rel="noopener">유튜브<span>↗</span></a><a href="https://fitcloud.github.io/" target="_blank" rel="noopener">기술 블로그<span>↗</span></a><div class="dr-h mono">CONTACT</div><a href="index.html#newsletter">뉴스레터<span></span></a><a href="plan.html">기획 노트<span></span></a><a class="btn fill" href="contact.html">문의하기</a></nav>
+<main class="wrap">
+<section class="pl-h"><div class="mono">PLANNING NOTE <span class="o">/</span> 솔트웨어 인사이트 블로그</div>
+<h1>블로그 기획 노트<span class="o">.</span></h1>
+<nav class="toc-p" aria-label="기획 노트 목차"><a href="#why"><span>01</span>만든 이유</a><a href="#persona"><span>02</span>퍼소나</a><a href="#journey"><span>03</span>고객여정지도</a><a href="#measure"><span>04</span>측정 계획</a></nav></section>
+
+<section class="ps" id="why"><span class="mono o">01 · WHY</span><h2>비어 있는 자리를 찾았습니다<span class="o">.</span></h2>
+<p class="lede">같은 클라우드 MSP 시장의 블로그 네 곳을 솔트웨어와 나란히 놓고 봤습니다. 솔트웨어의 기존 글 30편은 대부분 AWS 신제품 소식이었습니다.</p>
+<div class="gap"><span class="mono">빈자리</span>"회사에 쌓인 데이터를 AI가 쓸 수 있게 만드는 과정"을 실무 눈높이로 꾸준히 다루는 곳이 없습니다. Databricks, Starburst, Sapie를 모두 가진 솔트웨어가 가장 자연스럽게 쓸 수 있는 주제입니다.</div>
+<div class="tw"><table class="cmp"><thead><tr><th>기준</th><th class="me">솔트웨어 (기존)</th><th>GS네오텍</th><th>스마일샤크</th><th>베스핀글로벌</th></tr></thead><tbody><tr><td>직접 해 본 실습 글</td><td class="me no">없음</td><td class="">많음</td><td class="">있음</td><td class="no">없음</td></tr><tr><td>고객 사례</td><td class="me no">없음</td><td class="">예전 글만</td><td class="">메뉴만</td><td class="no">없음</td></tr><tr><td>쉬운 트렌드 해설</td><td class="me ">조금</td><td class="">조금</td><td class="">있음</td><td class="">많음</td></tr><tr><td>작성자 실명</td><td class="me no">없음</td><td class="">있음</td><td class="">일부</td><td class="no">없음</td></tr><tr><td>데이터 플랫폼 이야기</td><td class="me no">없음</td><td class="no">없음</td><td class="no">없음</td><td class="">조금</td></tr></tbody></table></div>
+<p class="note">2026.11.02 각 사 공식 블로그 공개 페이지 기준 · 클루커스, 메가존클라우드는 블로그 형태가 달라 표에서 뺐습니다.</p>
+<div class="series"><div><span class="mono">DATA SPOON</span><b>데이터 한 스푼</b><p>데이터 용어 하나를 일상의 비유로 쉽게 풉니다.</p><span class="st">여정 · 탐색</span></div><div><span class="mono">DATA NOTE</span><b>데이터 노트</b><p>기업이 AI와 데이터를 쓰다 부딪히는 문제를 한 편씩 짚습니다.</p><span class="st">여정 · 인지 · 비교</span></div><div><span class="mono">CUSTOMER STORY</span><b>고객 사례</b><p>고객사와 함께 한 도입 과정과 달라진 점을 정리합니다.</p><span class="st">여정 · 확신</span></div><div><span class="mono">SOLUTION GUIDE</span><b>솔루션 가이드</b><p>솔트웨어의 다섯 사업 영역을 문제, 동작 방식, 도입 단계, 자주 묻는 질문까지 자세히 풉니다.</p><span class="st">여정 · 비교</span></div></div></section>
+
+<section class="ps" id="persona"><span class="mono o">02 · PERSONA</span><h2>이 블로그를 읽을 네 사람<span class="o">.</span></h2>
+<p class="lede">솔트웨어 홈페이지의 고객 사례와 현장 목소리를 바탕으로 잡았습니다. 카드를 누르면 아래 여정지도가 그 사람 기준으로 바뀝니다.</p>
+<div class="flag">⚠ 가설 퍼소나 · 실제 고객 인터뷰 전이며, 이름은 지어낸 것입니다</div>
+<div class="pg"><div class="pc" role="button" tabindex="0" aria-label="박도윤 여정 보기"><div class="av" aria-hidden="true">박</div><h3>박도윤</h3><div class="rl">IT 기획 팀장</div><div class="og">제조 중견기업 · 40대</div><q>PoC는 끝났는데, 실제 데이터를 못 이어서 멈췄어요.</q><dl><dt>고민</dt><dd>설비, ERP, MES 데이터가 따로 놀아서 AI 시범 사업이 다음 단계로 못 넘어간다.</dd><dt>찾는 정보</dt><dd>도입 단계와 비용 감, 같은 업종 사례</dd></dl><div class="rd"><span class="mono">먼저 읽을 글</span><a href="output/manufacturing-ai-gap/preview.html">제조 데이터, 모으는 곳은 60%인데 AI로 읽는 곳은 0.1% · 그 사이에 무엇이 있나</a><a href="output/case-yeonsung/preview.html">연성대학교 · 한 달 2,500건 입시 문의에 챗봇을 세운 이유</a></div></div><div class="pc" role="button" tabindex="0" aria-label="이서연 여정 보기"><div class="av" aria-hidden="true">이</div><h3>이서연</h3><div class="rl">보안 담당 차장</div><div class="og">금융·공공 · 30대 후반</div><q>직원들이 ChatGPT를 쓰는데, 막을 수도 둘 수도 없어요.</q><dl><dt>고민</dt><dd>생성형 AI를 쓰는 직원은 느는데 민감정보가 밖으로 나가는지 확인할 방법이 없다.</dd><dt>찾는 정보</dt><dd>민감정보 차단 방법, 규제 대응, 감사 증빙</dd></dl><div class="rd"><span class="mono">먼저 읽을 글</span><a href="output/agent-permission/preview.html">에이전트에게 열쇠를 주기 전에 · 일은 맡기되 문은 정해 준다</a><a href="output/case-finance-10y/preview.html">금융권 클라우드 10년 · 한 달 만의 첫 이전부터 금융업 등록까지</a></div></div><div class="pc" role="button" tabindex="0" aria-label="김하늘 여정 보기"><div class="av" aria-hidden="true">김</div><h3>김하늘</h3><div class="rl">생산관리 대리</div><div class="og">현업 실무자 · 20대 후반</div><q>숫자 하나 맞추려고 시스템 세 개를 열어요.</q><dl><dt>고민</dt><dd>매달 보고서를 손으로 만든다. AI가 해 준다는데 무엇부터 알아야 할지 모른다.</dd><dt>찾는 정보</dt><dd>쉬운 개념 설명, 말로 묻고 표로 받는 방법</dd></dl><div class="rd"><span class="mono">먼저 읽을 글</span><a href="output/lakehouse/preview.html">레이크하우스란? 창고와 호수 사이, 데이터가 사는 집 🏠</a><a href="output/bigdata-short-story/preview.html">빅데이터는 장편소설처럼 · 단편부터 쓰세요</a></div></div><div class="pc" role="button" tabindex="0" aria-label="정민재 여정 보기"><div class="av" aria-hidden="true">정</div><h3>정민재</h3><div class="rl">CTO</div><div class="og">커머스 스타트업 · 30대</div><q>이용자가 늘자 인증, 비용, 배포가 한꺼번에 터졌어요.</q><dl><dt>고민</dt><dd>서비스가 빨리 커지면서 ISMS 인증, 클라우드 비용, 배포 시간이 동시에 발목을 잡는다.</dd><dt>찾는 정보</dt><dd>ISMS 준비, EKS 전환, 비용 최적화 사례</dd></dl><div class="rd"><span class="mono">먼저 읽을 글</span><a href="output/case-kmong/preview.html">크몽 · 배포 한 번에 2~3시간, 기다리던 개발자들</a><a href="output/case-backpacker/preview.html">백패커(아이디어스) · 쇼핑몰이 커질 때마다 함께 바꾼 것들</a><a href="output/region-az/preview.html">리전? 가용 영역? 아파트 단지로 이해하는 클라우드 지도 🏢</a></div></div></div></section>
+
+<section class="ps" id="journey"><span class="mono o">03 · JOURNEY MAP</span><h2>처음 알게 되고 문의하기까지<span class="o">.</span></h2>
+<p class="lede">B2B 고객이 거치는 다섯 단계와 단계마다 달라지는 마음을 곡선으로 그렸습니다. 지금 보는 사람: <b id="jw"></b>. 흐린 선은 나머지 세 사람입니다.</p>
+<div class="jm"><div class="jt" role="tablist" aria-label="퍼소나 고르기"><button type="button" role="tab">박도윤 · IT 기획 팀장</button><button type="button" role="tab">이서연 · 보안 담당 차장</button><button type="button" role="tab">김하늘 · 생산관리 대리</button><button type="button" role="tab">정민재 · CTO</button></div>
+<div class="chart"><div class="yl" aria-hidden="true"><span>좋음</span><span>막힘</span></div><svg id="jc" viewBox="0 0 1000 260" role="img" style="color:var(--text)"></svg></div>
+<div class="sx"><div><b>1. 인지</b><span>AWARE</span></div><div><b>2. 탐색</b><span>LEARN</span></div><div><b>3. 비교</b><span>COMPARE</span></div><div><b>4. 확신</b><span>TRUST</span></div><div><b>5. 행동</b><span>ACT</span></div></div></div>
+<div class="sg"><div class="sc"><div class="hd"><b>1. 인지</b><span>AWARE</span></div><div><h4>고객 행동</h4><p>검색이나 기사에서 문제를 처음 마주친다</p></div><div><h4>마음</h4><p class="th"></p></div><div><h4>블로그가 줄 글</h4><a href="output/manufacturing-ai-gap/preview.html">제조 데이터, 모으는 곳은 60%인데 AI로 읽는 곳은 0.1% · 그 사이에 무엇이 있나</a><a href="output/bigdata-short-story/preview.html">빅데이터는 장편소설처럼 · 단편부터 쓰세요</a></div><div><h4>볼 지표</h4><p class="kp">검색 유입 방문 수</p></div></div><div class="sc"><div class="hd"><b>2. 탐색</b><span>LEARN</span></div><div><h4>고객 행동</h4><p>모르는 용어와 개념을 공부한다</p></div><div><h4>마음</h4><p class="th"></p></div><div><h4>블로그가 줄 글</h4><a href="output/lakehouse/preview.html">레이크하우스란? 창고와 호수 사이, 데이터가 사는 집 🏠</a><a href="output/realtime-kinesis/preview.html">실시간 데이터는 어떻게 흐를까? 수도관으로 보는 Kinesis 🚰</a><a href="output/region-az/preview.html">리전? 가용 영역? 아파트 단지로 이해하는 클라우드 지도 🏢</a></div><div><h4>볼 지표</h4><p class="kp">평균 체류 시간 · 끝까지 읽은 비율</p></div></div><div class="sc"><div class="hd"><b>3. 비교</b><span>COMPARE</span></div><div><h4>고객 행동</h4><p>방식과 업체, 비용과 위험을 견준다</p></div><div><h4>마음</h4><p class="th"></p></div><div><h4>블로그가 줄 글</h4><a href="output/hybrid-cloud/preview.html">하이브리드 클라우드 · 좋은 점만큼 챙길 것도 많습니다</a><a href="output/agent-permission/preview.html">에이전트에게 열쇠를 주기 전에 · 일은 맡기되 문은 정해 준다</a></div><div><h4>볼 지표</h4><p class="kp">한 번 방문에 2편 이상 읽은 비율</p></div></div><div class="sc"><div class="hd"><b>4. 확신</b><span>TRUST</span></div><div><h4>고객 행동</h4><p>같은 업종이 해낸 사례를 확인한다</p></div><div><h4>마음</h4><p class="th"></p></div><div><h4>블로그가 줄 글</h4><a href="output/case-yeonsung/preview.html">연성대학교 · 한 달 2,500건 입시 문의에 챗봇을 세운 이유</a><a href="output/case-kmong/preview.html">크몽 · 배포 한 번에 2~3시간, 기다리던 개발자들</a><a href="output/case-backpacker/preview.html">백패커(아이디어스) · 쇼핑몰이 커질 때마다 함께 바꾼 것들</a><a href="output/case-finance-10y/preview.html">금융권 클라우드 10년 · 한 달 만의 첫 이전부터 금융업 등록까지</a><a href="output/case-refine/preview.html">리파인 · 모바일 개발자 없이 모바일 서비스 만들기</a></div><div><h4>볼 지표</h4><p class="kp">고객 사례 조회 비율</p></div></div><div class="sc"><div class="hd"><b>5. 행동</b><span>ACT</span></div><div><h4>고객 행동</h4><p>문의하거나 구독해서 다음 걸음을 뗀다</p></div><div><h4>마음</h4><p class="th"></p></div><div><h4>블로그가 줄 글</h4><a href="contact.html">문의하기</a><a href="index.html#newsletter">뉴스레터 구독</a></div><div><h4>볼 지표</h4><p class="kp">문의 전환율 · 뉴스레터 구독률</p></div></div></div></section>
+
+<section class="ps" id="measure"><span class="mono o">04 · MEASURE</span><h2>여정을 숫자로 확인합니다<span class="o">.</span></h2>
+<p class="lede">단계마다 하나씩 볼 지표를 정했습니다. 목표치는 운영 전 가정이고, 첫 3개월 실제 수치를 보고 다시 잡습니다.</p>
+<div class="tw"><table class="mt"><thead><tr><th>단계</th><th>지표</th><th>목표 (가정)</th><th>측정 방법</th></tr></thead><tbody><tr><td>인지</td><td>검색 유입 방문</td><td>월 3,000회</td><td>GA4 유입 경로 = 자연 검색</td></tr><tr><td>탐색</td><td>평균 체류 시간</td><td>2분 이상</td><td>GA4 참여 시간, 스크롤 90% 이벤트</td></tr><tr><td>비교</td><td>2편 이상 읽은 방문 비율</td><td>25%</td><td>세션당 페이지 조회 수</td></tr><tr><td>확신</td><td>고객 사례 조회 비율</td><td>전체 방문의 30%</td><td>/case-* 페이지 조회</td></tr><tr><td>행동</td><td>문의 전환율 · 구독률</td><td>0.5% · 1%</td><td>문의 폼 제출, 구독 폼 제출 이벤트</td></tr></tbody></table></div>
+<div class="nx"><div><b>가장 막히는 곳부터</b>네 사람 중 셋이 탐색·비교 단계에서 곡선이 가장 낮습니다. 쉬운 해설(데이터 한 스푼)과 솔루션 가이드를 먼저 늘립니다.</div>
+<div><b>사례가 확신을 만든다</b>모든 퍼소나의 곡선이 확신 단계에서 오릅니다. 글마다 같은 업종 사례로 가는 링크를 붙입니다.</div>
+<div><b>퍼소나 검증</b>문의 폼의 "어떤 글을 보고 오셨나요?" 답을 모아, 실제로 어떤 사람이 오는지 3개월 뒤 퍼소나를 고칩니다.</div></div></section>
+</main>
+<footer class="foot"><div class="wrap">
+<div><a class="logo" href="index.html"><i></i>saltware</a><p>Connect Any Data. Understand with AI. Act with Agents.<br>솔트웨어가 현장에서 겪은 데이터·AI 이야기를 씁니다.</p></div>
+<div><b>SERIES</b><a href="index.html?cat=spoon#archive">데이터 한 스푼</a><a href="index.html?cat=note#archive">데이터 노트</a><a href="index.html?cat=case#archive">고객 사례</a><a href="index.html?cat=guide#archive">솔루션 가이드</a></div>
+<div><b>SALTWARE</b><a href="https://www.saltware.co.kr" target="_blank" rel="noopener">회사 홈페이지</a><a href="https://www.youtube.com/@saltware_youtube" target="_blank" rel="noopener">유튜브</a><a href="https://fitcloud.github.io/" target="_blank" rel="noopener">기술 블로그</a></div>
+<div><b>CONTACT</b><a href="contact.html">문의하기</a><a href="index.html#newsletter">뉴스레터</a><a href="plan.html">기획 노트</a></div>
+</div><div class="copy"><div class="wrap">블로그 기획 과제용 시안 · 문의·구독 폼은 실제로 전송되지 않습니다</div></div></footer><div class="toast" role="status"></div>
+<script>
+function toast(m){var t=document.querySelector('.toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove('show')},2200)}
+(function(){var b=document.querySelector('.burger'),d=document.querySelector('.drawer'),ic=b.innerHTML;
+function set(o){d.classList.toggle('open',o);b.setAttribute('aria-expanded',o);b.innerHTML=o?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6 6 18"/></svg>':ic;document.body.style.overflow=o?'hidden':''}
+b.addEventListener('click',function(){set(!d.classList.contains('open'))});d.addEventListener('click',function(e){if(e.target.closest('a'))set(false)});
+addEventListener('resize',function(){if(innerWidth>780)set(false)});addEventListener('keydown',function(e){if(e.key==='Escape'){set(false);dd(null)}})
+var D=document.querySelectorAll('.dd');function dd(o){D.forEach(function(x){var on=x===o&&!x.classList.contains('open');x.classList.toggle('open',on);x.querySelector('.dd-b').setAttribute('aria-expanded',on)})}
+D.forEach(function(x){x.querySelector('.dd-b').addEventListener('click',function(e){e.stopPropagation();dd(x)})});document.addEventListener('click',function(e){if(!e.target.closest('.dd'))D.forEach(function(x){x.classList.remove('open');x.querySelector('.dd-b').setAttribute('aria-expanded',false)})})})();
+
+var J=[{"name": "박도윤", "role": "IT 기획 팀장", "scores": [3, 1, 2, 4, 5], "thoughts": ["제조 AI 도입, 남들은 어디까지 했지?", "레이크하우스? 용어부터 막히네.", "우리 공장 데이터로도 될까, 비용은?", "비슷한 규모 회사가 해냈구나.", "우리 상황을 정리해서 문의해 보자."]}, {"name": "이서연", "role": "보안 담당 차장", "scores": [2, 2, 1, 4, 4], "thoughts": ["직원들이 AI에 뭘 넣는지 모르겠다.", "막을지 둘지, 기준부터 필요해.", "규제 감사 때 증빙이 되는 방법인가?", "금융권에서 10년을 해 온 곳이구나.", "보안 검토 자료를 요청해 보자."]}, {"name": "김하늘", "role": "생산관리 대리", "scores": [2, 4, 3, 4, 4], "thoughts": ["보고서 숫자 맞추다 하루가 간다.", "비유로 보니까 이해가 된다!", "그래도 우리 팀에 맞을지는 모르겠다.", "말로 물으면 표가 나온다니.", "팀장님께 이 글을 공유해야지."]}, {"name": "정민재", "role": "CTO", "scores": [1, 3, 2, 5, 4], "thoughts": ["트래픽은 느는데 배포는 2시간째.", "리전과 가용 영역부터 다시 정리하자.", "직접 할까, 파트너와 할까?", "크몽, 아이디어스도 같은 길을 갔네.", "구축 범위를 상담받아 보자."]}],ST=["인지", "탐색", "비교", "확신", "행동"],cur=0,W=1000,H=260,X=function(i){return 100+i*200},Y=function(v){return 220-(v-1)*45},EM=['','막힘','답답','보통','안심','기대'];
+function curve(pts){var d='M'+pts[0][0]+','+pts[0][1];for(var i=0;i<pts.length-1;i++){var p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||p2;
+ d+=' C'+(p1[0]+(p2[0]-p0[0])/6)+','+(p1[1]+(p2[1]-p0[1])/6)+' '+(p2[0]-(p3[0]-p1[0])/6)+','+(p2[1]-(p3[1]-p1[1])/6)+' '+p2[0]+','+p2[1]}return d}
+function pts(s){return s.map(function(v,i){return[X(i),Y(v)]})}
+function draw(){var p=J[cur],h='<defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F49F20" stop-opacity=".28"/><stop offset="1" stop-color="#F49F20" stop-opacity="0"/></linearGradient></defs>';
+ for(var v=1;v<=5;v++)h+='<line x1="40" x2="960" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="currentColor" stroke-opacity=".09" stroke-dasharray="'+(v===3?'0':'4 6')+'"/>';
+ J.forEach(function(o,k){if(k!==cur)h+='<path d="'+curve(pts(o.scores))+'" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-width="2"/>'});
+ var c=curve(pts(p.scores));h+='<path d="'+c+' L'+X(4)+','+Y(1)+' L'+X(0)+','+Y(1)+' Z" fill="url(#ga)"/><path d="'+c+'" fill="none" stroke="#F49F20" stroke-width="4" stroke-linecap="round"/>';
+ var lo=Math.min.apply(null,p.scores);
+ p.scores.forEach(function(v,i){var w=EM[v].length*20+28,low=v===lo;
+  h+='<rect x="'+(X(i)-w/2)+'" y="'+(Y(v)-54)+'" width="'+w+'" height="32" rx="16" fill="'+(low?'#F49F20':'#0D0D0D')+'" stroke="#F49F20" stroke-opacity="'+(low?1:.45)+'"/>'
+   +'<text x="'+X(i)+'" y="'+(Y(v)-32)+'" text-anchor="middle" font-size="17" font-weight="700" fill="'+(low?'#0D0D0D':'#F49F20')+'">'+EM[v]+'</text>'
+   +'<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="'+(low?10:8)+'" fill="'+(low?'#F49F20':'#0D0D0D')+'" stroke="#F49F20" stroke-width="4"/>';
+  if(low)h+='<text x="'+X(i)+'" y="'+(Y(v)+40)+'" text-anchor="middle" font-size="17" fill="#F49F20" font-weight="600">가장 막히는 곳</text>'});
+ document.querySelector('#jc').innerHTML=h;
+ document.querySelector('#jc').setAttribute('aria-label',p.name+' '+p.role+'의 감정 곡선: '+p.scores.map(function(v,i){return ST[i]+' '+v+'점'}).join(', '));
+ document.querySelectorAll('.jt button').forEach(function(b,k){b.setAttribute('aria-selected',k===cur)});
+ document.querySelectorAll('.pc').forEach(function(b,k){b.classList.toggle('on',k===cur)});
+ document.querySelectorAll('.th').forEach(function(t,i){t.textContent=p.thoughts[i];t.dataset.e=EM[p.scores[i]]});
+ document.querySelector('#jw').textContent=p.name+' '+p.role}
+function pick(k,go){cur=k;draw();if(go)document.querySelector('#journey').scrollIntoView({behavior:'smooth'})}
+document.querySelectorAll('.jt button').forEach(function(b,k){b.addEventListener('click',function(){pick(k)})});
+document.querySelectorAll('.pc').forEach(function(b,k){b.addEventListener('click',function(ev){if(ev.target.closest('a'))return;pick(k,true)});
+ b.addEventListener('keydown',function(ev){if((ev.key==='Enter'||ev.key===' ')&&ev.target===b){ev.preventDefault();pick(k,true)}})});
+draw();
+</script></body></html>

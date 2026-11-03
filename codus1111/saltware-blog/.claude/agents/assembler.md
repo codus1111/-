@@ -22,7 +22,7 @@ tools: Read, Write, Edit, Bash
    - `output/<슬러그>/preview.html`: 글 페이지. 목차, 읽기 진행 막대, 링크 복사, 이전/다음 글, 관련 글
    - `contact.html`: 문의하기 폼
 3. 이 글이 `guide/upcoming.md`에 있으면 그 줄을 지운 뒤 2번을 한 번 더 돌린다.
-4. 레이아웃이나 색을 바꿀 때만 `scripts/build_site.py`를 고친다. 색은 image-guide.md의 솔트웨어 팔레트만 쓴다.
+4. 화면 디자인은 `scripts/theme.py`에 있다. 레이아웃이나 색을 바꿀 때만 고친다. 글 머리말에 `points`(3줄 요약, | 로 구분), `cover`(표지 핵심 단어), 고객 사례는 `highlight`(핵심 숫자)를 꼭 넣는다.
 
 ## 출력
 - `output/<주제-슬러그>/final.md`
