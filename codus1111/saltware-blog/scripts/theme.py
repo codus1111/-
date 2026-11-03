@@ -613,7 +613,7 @@ def build_plan(posts):
 <section class="ps" id="measure"><span class="mono o">04 · MEASURE</span><h2>여정을 숫자로 확인합니다<span class="o">.</span></h2>
 <p class="lede">단계마다 하나씩 볼 지표를 정했습니다. 목표치는 운영 전 가정이고, 첫 3개월 실제 수치를 보고 다시 잡습니다.</p>
 <div class="tw"><table class="mt"><thead><tr><th>단계</th><th>지표</th><th>목표 (가정)</th><th>측정 방법</th></tr></thead><tbody>{metrics}</tbody></table></div>
-<div class="nx"><div><b>가장 막히는 곳부터</b>네 사람 중 셋이 탐색·비교 단계에서 곡선이 가장 낮습니다. 쉬운 해설(데이터 한 스푼)과 솔루션 가이드를 먼저 늘립니다.</div>
+<div class="nx"><div><b>가장 막히는 곳부터</b>네 사람 모두 인지~비교 단계에서 곡선이 가장 낮습니다. 문제를 짚는 데이터 노트, 쉬운 해설(데이터 한 스푼), 솔루션 가이드를 먼저 늘립니다.</div>
 <div><b>사례가 확신을 만든다</b>모든 퍼소나의 곡선이 확신 단계에서 오릅니다. 글마다 같은 업종 사례로 가는 링크를 붙입니다.</div>
 <div><b>퍼소나 검증</b>문의 폼의 "어떤 글을 보고 오셨나요?" 답을 모아, 실제로 어떤 사람이 오는지 3개월 뒤 퍼소나를 고칩니다.</div></div></section>
 </main>"""
