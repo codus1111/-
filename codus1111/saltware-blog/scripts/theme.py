@@ -35,17 +35,6 @@ a{color:inherit;text-decoration:none}img{display:block;max-width:100%}button,inp
 .menu{display:flex;gap:30px;align-items:center}
 .menu a{font-size:15px;color:var(--text2);padding:6px 0;position:relative}.menu a:hover{color:var(--text)}
 .menu a.on{color:var(--text)}.menu a.on:before{content:"";position:absolute;left:-12px;top:50%;width:5px;height:5px;margin-top:-2.5px;border-radius:50%;background:var(--o)}
-.dd{position:relative;display:flex;align-items:center}
-.dd-b{display:flex;align-items:center;gap:6px;background:none;border:0;padding:6px 0;font-size:15px;color:var(--text2);cursor:pointer;position:relative}
-.dd-b:hover,.dd:hover .dd-b,.dd-b[aria-expanded=true]{color:var(--text)}.dd-b svg{transition:transform .2s}.dd:hover .dd-b svg,.dd-b[aria-expanded=true] svg{transform:rotate(180deg)}
-.dd-b.on{color:var(--text)}.dd-b.on:before{content:"";position:absolute;left:-12px;top:50%;width:5px;height:5px;margin-top:-2.5px;border-radius:50%;background:var(--o)}
-.dd-m{position:absolute;top:100%;left:-18px;min-width:180px;padding:8px;margin-top:14px;background:var(--panel);border:1px solid var(--line2);border-radius:14px;box-shadow:0 24px 48px -16px rgba(0,0,0,.6);
-opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .18s,transform .18s var(--ease),visibility .18s}
-.dd-m:before{content:"";position:absolute;left:0;right:0;top:-16px;height:16px}
-.dd:hover .dd-m,.dd:focus-within .dd-m,.dd.open .dd-m{opacity:1;visibility:visible;transform:none}
-.menu .dd-m a{display:block;padding:10px 12px;border-radius:8px;font-size:14.5px;white-space:nowrap}.menu .dd-m a:hover{background:var(--panel2);color:var(--text)}
-.menu .dd-m a.on{color:var(--o)}.menu .dd-m a.on:before{display:none}
-.dr-h{padding:28px 0 4px;color:var(--o)}
 .tools{margin-left:auto;display:flex;gap:10px;align-items:center}
 .ib{width:44px;height:44px;border-radius:50%;border:1px solid var(--line2);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text)}
 .ib:hover{border-color:var(--text)}.burger{display:none}
@@ -78,13 +67,10 @@ function toast(m){var t=document.querySelector('.toast');t.textContent=m;t.class
 (function(){var b=document.querySelector('.burger'),d=document.querySelector('.drawer'),ic=b.innerHTML;
 function set(o){d.classList.toggle('open',o);b.setAttribute('aria-expanded',o);b.innerHTML=o?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6 6 18"/></svg>':ic;document.body.style.overflow=o?'hidden':''}
 b.addEventListener('click',function(){set(!d.classList.contains('open'))});d.addEventListener('click',function(e){if(e.target.closest('a'))set(false)});
-addEventListener('resize',function(){if(innerWidth>780)set(false)});addEventListener('keydown',function(e){if(e.key==='Escape'){set(false);dd(null)}})
-var D=document.querySelectorAll('.dd');function dd(o){D.forEach(function(x){var on=x===o&&!x.classList.contains('open');x.classList.toggle('open',on);x.querySelector('.dd-b').setAttribute('aria-expanded',on)})}
-D.forEach(function(x){x.querySelector('.dd-b').addEventListener('click',function(e){e.stopPropagation();dd(x)})});document.addEventListener('click',function(e){if(!e.target.closest('.dd'))D.forEach(function(x){x.classList.remove('open');x.querySelector('.dd-b').setAttribute('aria-expanded',false)})})})();
+addEventListener('resize',function(){if(innerWidth>780)set(false)});addEventListener('keydown',function(e){if(e.key==='Escape')set(false)})})();
 """
 
 I_SEARCH = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>'
-I_DOWN = '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m2 3.5 3 3 3-3"/></svg>'
 I_MENU = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8h16M4 16h16"/></svg>'
 
 
@@ -97,30 +83,10 @@ def kw(p, size, tag=True, idx=None):
     return f'<div class="kw" style="--gx:{gx}%;--gy:{gy}%"><b style="font-size:{size}">{esc(p["cover"])}</b>{t}{n}</div>'
 
 
-def more_menus(base):
-    """바닥글 2열(SALTWARE)과 3열(CONTACT)을 머리글 메뉴에도 똑같이 보여 준다."""
-    ext = ' target="_blank" rel="noopener"'
-    return [
-        ("SALTWARE", "saltware", [("회사 홈페이지", "https://www.saltware.co.kr", ext), ("유튜브", "https://www.youtube.com/@saltware_youtube", ext),
-                                  ("기술 블로그", "https://fitcloud.github.io/", ext)]),
-        ("CONTACT", "contact", [("문의하기", f"{base}contact.html", ""), ("뉴스레터", f"{base}index.html#newsletter", ""),
-                                ("기획 노트", f"{base}plan.html", "")]),
-    ]
-
-
 def header(base, active):
     links = [("all", "인사이트", f"{base}index.html")] + [(k, n, f"{base}index.html?cat={k}#archive") for k, n, _, _ in CATS]
-    on = " on" if active in dict((k, 1) for k, _, _ in links) else ""
-    menu = (f'<div class="dd"><button type="button" class="dd-b{on}" aria-expanded="false">Series {I_DOWN}</button><div class="dd-m">'
-            + "".join(f'<a href="{u}" data-cat="{k}" class="{"on" if active == k else ""}">{n}</a>' for k, n, u in links) + "</div></div>")
-    drawer = '<div class="dr-h mono">SERIES</div>' + "".join(f'<a href="{u}">{n}<span>{EN.get(k, "ALL")}</span></a>' for k, n, u in links)
-    for label, key, items in more_menus(base):
-        on = " on" if (key == "contact" and active in ("contact", "plan")) else ""
-        sub = "".join(f'<a href="{u}"{x}>{n}{" ↗" if x else ""}</a>' for n, u, x in items)
-        menu += (f'<div class="dd"><button type="button" class="dd-b{on}" aria-expanded="false">{label.title()} {I_DOWN}</button>'
-                 f'<div class="dd-m">{sub}</div></div>')
-        drawer += f'<div class="dr-h mono">{label}</div>' + "".join(f'<a href="{u}"{x}>{n}<span>{"↗" if x else ""}</span></a>' for n, u, x in items
-                                                                if not u.endswith("contact.html"))  # 모바일 메뉴 맨 아래에 문의하기 버튼이 따로 있다
+    menu = "".join(f'<a href="{u}" data-cat="{k}" class="{"on" if active == k else ""}">{n}</a>' for k, n, u in links)
+    drawer = "".join(f'<a href="{u}">{n}<span>{EN.get(k, "ALL")}</span></a>' for k, n, u in links)
     return f"""<header class="top"><div class="nav">
 <a class="logo" href="{base}index.html" aria-label="솔트웨어 인사이트 홈"><i></i>saltware<small>INSIGHTS</small></a>
 <nav class="menu" aria-label="주요 메뉴">{menu}</nav>
@@ -136,7 +102,7 @@ def footer(base):
 <div><a class="logo" href="{base}index.html"><i></i>saltware</a><p>Connect Any Data. Understand with AI. Act with Agents.<br>솔트웨어가 현장에서 겪은 데이터·AI 이야기를 씁니다.</p></div>
 <div><b>SERIES</b>{cats}</div>
 <div><b>SALTWARE</b><a href="https://www.saltware.co.kr" target="_blank" rel="noopener">회사 홈페이지</a><a href="https://www.youtube.com/@saltware_youtube" target="_blank" rel="noopener">유튜브</a><a href="https://fitcloud.github.io/" target="_blank" rel="noopener">기술 블로그</a></div>
-<div><b>CONTACT</b><a href="{base}contact.html">문의하기</a><a href="{base}index.html#newsletter">뉴스레터</a><a href="{base}plan.html">기획 노트</a></div>
+<div><b>CONTACT</b><a href="{base}contact.html">문의하기</a><a href="{base}index.html#newsletter">뉴스레터</a></div>
 </div><div class="copy"><div class="wrap">블로그 기획 과제용 시안 · 문의·구독 폼은 실제로 전송되지 않습니다</div></div></footer><div class="toast" role="status"></div>"""
 
 
@@ -223,7 +189,7 @@ h.push('<span>'+(c?e(c.desc)+' · ':'')+(l.length?l.length+'편':'')+(s.q?' · "
 rows.innerHTML=l.length?l.slice(0,s.n).map(row).join(''):'<div class="empty"><b>찾는 글이 없어요</b>다른 말로 검색하거나 필터를 풀어 보세요.</div>';
 $('#more').style.display=l.length>s.n?'flex':'none';wr()}
 document.querySelectorAll('.pill').forEach(function(b){b.addEventListener('click',function(){s.cat=b.dataset.cat;s.n=N;draw()})});
-document.querySelectorAll('.menu a[data-cat],.drawer a[href*="cat="]').forEach(function(a){a.addEventListener('click',function(ev){var m=a.getAttribute('href').match(/cat=(\\w+)/);if(!m&&a.dataset.cat!=='all')return;ev.preventDefault();var d=a.closest('.dd');if(d){d.classList.remove('open');d.querySelector('.dd-b').setAttribute('aria-expanded',false)}a.blur();s.cat=m?m[1]:'all';s.tag='';s.q='';q.value='';s.n=N;draw();$('#archive').scrollIntoView({behavior:'smooth'})})});
+document.querySelectorAll('.menu a[data-cat],.drawer a[href*="cat="]').forEach(function(a){a.addEventListener('click',function(ev){var m=a.getAttribute('href').match(/cat=(\\w+)/);if(!m&&a.dataset.cat!=='all')return;ev.preventDefault();s.cat=m?m[1]:'all';s.tag='';s.q='';q.value='';s.n=N;draw();$('#archive').scrollIntoView({behavior:'smooth'})})});
 $('.search-btn').addEventListener('click',function(ev){ev.preventDefault();$('#archive').scrollIntoView({behavior:'smooth'});setTimeout(function(){q.focus()},350)});
 var tm;q.addEventListener('input',function(){clearTimeout(tm);tm=setTimeout(function(){s.q=q.value.trim();s.n=N;draw()},150)});qc.addEventListener('click',function(){q.value='';s.q='';draw();q.focus()});
 document.addEventListener('click',function(ev){var t=ev.target.closest('[data-tag]');if(t){ev.preventDefault();s.tag=t.dataset.tag;s.n=N;draw();$('#archive').scrollIntoView({behavior:'smooth'});return}if(ev.target.closest('#tc')){s.tag='';draw()}});
@@ -402,229 +368,8 @@ def build_contact():
     (ROOT / "contact.html").write_text(page("문의하기 | 솔트웨어 인사이트", "", "contact", CONTACT_CSS, body, CONTACT_JS), encoding="utf-8")
 
 
-# ---------- 기획 노트 ----------
-# 블로그를 왜, 누구를 위해 만들었는지 보여 주는 페이지. 바닥글 링크로만 들어온다.
-
-STAGES = [
-    ("인지", "AWARE", "검색이나 기사에서 문제를 처음 마주친다",
-     ["manufacturing-ai-gap", "bigdata-short-story"], "검색 유입 방문 수"),
-    ("탐색", "LEARN", "모르는 용어와 개념을 공부한다",
-     ["lakehouse", "realtime-kinesis", "region-az"], "평균 체류 시간 · 끝까지 읽은 비율"),
-    ("비교", "COMPARE", "방식과 업체, 비용과 위험을 견준다",
-     ["hybrid-cloud", "agent-permission"], "한 번 방문에 2편 이상 읽은 비율"),
-    ("확신", "TRUST", "같은 업종이 해낸 사례를 확인한다",
-     ["case-yeonsung", "case-kmong", "case-backpacker", "case-finance-10y", "case-refine"], "고객 사례 조회 비율"),
-    ("행동", "ACT", "문의하거나 구독해서 다음 걸음을 뗀다",
-     [], "문의 전환율 · 뉴스레터 구독률"),
-]
-
-PERSONAS = [
-    {"key": "lead", "name": "박도윤", "role": "IT 기획 팀장", "org": "제조 중견기업 · 40대",
-     "quote": "PoC는 끝났는데, 실제 데이터를 못 이어서 멈췄어요.",
-     "pain": "설비, ERP, MES 데이터가 따로 놀아서 AI 시범 사업이 다음 단계로 못 넘어간다.",
-     "need": "도입 단계와 비용 감, 같은 업종 사례",
-     "read": ["manufacturing-ai-gap", "case-yeonsung"],
-     "scores": [3, 1, 2, 4, 5],
-     "thoughts": ["제조 AI 도입, 남들은 어디까지 했지?", "레이크하우스? 용어부터 막히네.", "우리 공장 데이터로도 될까, 비용은?",
-                  "비슷한 규모 회사가 해냈구나.", "우리 상황을 정리해서 문의해 보자."]},
-    {"key": "sec", "name": "이서연", "role": "보안 담당 차장", "org": "금융·공공 · 30대 후반",
-     "quote": "직원들이 ChatGPT를 쓰는데, 막을 수도 둘 수도 없어요.",
-     "pain": "생성형 AI를 쓰는 직원은 느는데 민감정보가 밖으로 나가는지 확인할 방법이 없다.",
-     "need": "민감정보 차단 방법, 규제 대응, 감사 증빙",
-     "read": ["agent-permission", "case-finance-10y"],
-     "scores": [2, 2, 1, 4, 4],
-     "thoughts": ["직원들이 AI에 뭘 넣는지 모르겠다.", "막을지 둘지, 기준부터 필요해.", "규제 감사 때 증빙이 되는 방법인가?",
-                  "금융권에서 10년을 해 온 곳이구나.", "보안 검토 자료를 요청해 보자."]},
-    {"key": "ops", "name": "김하늘", "role": "생산관리 대리", "org": "현업 실무자 · 20대 후반",
-     "quote": "숫자 하나 맞추려고 시스템 세 개를 열어요.",
-     "pain": "매달 보고서를 손으로 만든다. AI가 해 준다는데 무엇부터 알아야 할지 모른다.",
-     "need": "쉬운 개념 설명, 말로 묻고 표로 받는 방법",
-     "read": ["lakehouse", "bigdata-short-story"],
-     "scores": [2, 4, 3, 4, 4],
-     "thoughts": ["보고서 숫자 맞추다 하루가 간다.", "비유로 보니까 이해가 된다!", "그래도 우리 팀에 맞을지는 모르겠다.",
-                  "말로 물으면 표가 나온다니.", "팀장님께 이 글을 공유해야지."]},
-    {"key": "cto", "name": "정민재", "role": "CTO", "org": "커머스 스타트업 · 30대",
-     "quote": "이용자가 늘자 인증, 비용, 배포가 한꺼번에 터졌어요.",
-     "pain": "서비스가 빨리 커지면서 ISMS 인증, 클라우드 비용, 배포 시간이 동시에 발목을 잡는다.",
-     "need": "ISMS 준비, EKS 전환, 비용 최적화 사례",
-     "read": ["case-kmong", "case-backpacker", "region-az"],
-     "scores": [1, 3, 2, 5, 4],
-     "thoughts": ["트래픽은 느는데 배포는 2시간째.", "리전과 가용 영역부터 다시 정리하자.", "직접 할까, 파트너와 할까?",
-                  "크몽, 아이디어스도 같은 길을 갔네.", "구축 범위를 상담받아 보자."]},
-]
-
-COMPARE = [
-    ("직접 해 본 실습 글", "없음", "많음", "있음", "없음"),
-    ("고객 사례", "없음", "예전 글만", "메뉴만", "없음"),
-    ("쉬운 트렌드 해설", "조금", "조금", "있음", "많음"),
-    ("작성자 실명", "없음", "있음", "일부", "없음"),
-    ("데이터 플랫폼 이야기", "없음", "없음", "없음", "조금"),
-]
-
-SERIES_ROLE = {"spoon": "탐색", "note": "인지 · 비교", "case": "확신", "guide": "비교"}
-
-METRICS = [
-    ("인지", "검색 유입 방문", "월 3,000회", "GA4 유입 경로 = 자연 검색"),
-    ("탐색", "평균 체류 시간", "2분 이상", "GA4 참여 시간, 스크롤 90% 이벤트"),
-    ("비교", "2편 이상 읽은 방문 비율", "25%", "세션당 페이지 조회 수"),
-    ("확신", "고객 사례 조회 비율", "전체 방문의 30%", "/case-* 페이지 조회"),
-    ("행동", "문의 전환율 · 구독률", "0.5% · 1%", "문의 폼 제출, 구독 폼 제출 이벤트"),
-]
-
-PLAN_CSS = """
-.pl-h{padding:64px 0 36px;border-bottom:1px solid var(--line)}
-.pl-h h1{font-size:clamp(30px,3.6vw,46px);line-height:1.15;letter-spacing:-.045em;margin:14px 0 0;font-weight:800}
-.toc-p{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}.toc-p a{height:38px;display:inline-flex;align-items:center;gap:8px;padding:0 16px;border:1px solid var(--line2);border-radius:999px;font-size:14px;color:var(--text2)}
-.toc-p a:hover{border-color:var(--o);color:var(--text)}.toc-p a span{font-family:var(--mono);font-size:11px;color:var(--o)}
-.ps{padding-top:104px;scroll-margin-top:72px}
-.ps>.mono{display:block}.ps h2{font-size:clamp(28px,3.6vw,46px);letter-spacing:-.045em;line-height:1.15;margin:12px 0 14px}
-.ps .lede{margin:0 0 36px;color:var(--muted);font-size:16px;line-height:1.7;max-width:640px}
-.gap{border:1px solid var(--o);border-radius:18px;padding:28px 32px;background:var(--o-soft);font-size:20px;line-height:1.6;letter-spacing:-.02em;font-weight:600;margin-bottom:36px}
-.gap .mono{display:block;color:var(--o);margin-bottom:10px}
-.tw{border:1px solid var(--line);border-radius:18px;overflow-x:auto}
-table.cmp{width:100%;border-collapse:collapse;font-size:15px;min-width:560px}
-.cmp th,.cmp td{padding:16px 18px;text-align:left;border-bottom:1px solid var(--line)}.cmp tr:last-child td{border-bottom:0}
-.cmp th{font-family:var(--mono);font-weight:500;font-size:11.5px;letter-spacing:.08em;color:var(--muted)}
-.cmp td:first-child{color:var(--text2)}.cmp .me{color:var(--o)}.cmp td.me{font-weight:700}
-.cmp .no{color:var(--muted)}
-.note{margin:12px 0 0;font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.02em;line-height:1.7}
-.series{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-top:28px}
-.series div{background:var(--bg);padding:24px}.series b{display:block;font-size:18px;letter-spacing:-.02em;margin:10px 0 8px}.series p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
-.series .st{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--o)}
-.flag{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 12px;border-radius:999px;border:1px dashed var(--o);color:var(--o);font-size:13px;font-weight:600;margin-bottom:24px}
-.pg{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.pc{border:1px solid var(--line);border-radius:18px;background:var(--panel);padding:24px;display:flex;flex-direction:column;cursor:pointer;transition:border-color .2s;text-align:left;color:inherit}
-.pc:hover{border-color:var(--line2)}.pc.on{border-color:var(--o)}
-.pc .av{width:48px;height:48px;border-radius:50%;background:var(--panel2);border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:var(--o)}
-.pc.on .av{background:var(--o);color:#0D0D0D;border-color:var(--o)}
-.pc h3{font-size:20px;letter-spacing:-.03em;margin:18px 0 4px}.pc .rl{font-size:14px;color:var(--text2)}.pc .og{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:.04em}
-.pc q{display:block;margin:20px 0;padding-left:14px;border-left:2px solid var(--o);font-size:15.5px;line-height:1.6;color:var(--text);quotes:"“" "”"}
-.pc dl{margin:0;font-size:14px;line-height:1.6}.pc dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--muted);margin-top:14px}.pc dd{margin:4px 0 0;color:var(--text2)}
-.pc .rd{margin-top:auto;padding-top:18px}.pc .rd a{display:block;font-size:13.5px;color:var(--text2);padding:6px 0;border-top:1px solid var(--line)}.pc .rd a:hover{color:var(--o)}
-.jm{border:1px solid var(--line);border-radius:22px;background:var(--panel);padding:28px 28px 8px}
-.jt{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
-.jt button{height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--line2);background:transparent;font-size:14px;color:var(--text2);cursor:pointer}
-.jt button:hover{color:var(--text);border-color:var(--text2)}.jt button[aria-selected=true]{background:var(--o);color:#0D0D0D;border-color:var(--o);font-weight:700}
-.chart{position:relative}.chart svg{display:block;width:100%;height:auto;overflow:visible}
-.yl{position:absolute;left:0;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-between;padding:10px 0 22px;font-family:var(--mono);font-size:10.5px;color:var(--muted);pointer-events:none}
-.sx{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);margin-top:4px}
-.sx div{text-align:center;padding:14px 4px}.sx b{display:block;font-size:16px;letter-spacing:-.02em}.sx span{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.08em}
-.sg{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-top:16px}
-.sc{background:var(--bg);padding:22px 18px;display:flex;flex-direction:column;gap:18px}
-.sc .hd{display:flex;align-items:baseline;gap:8px}.sc .hd b{font-size:18px}.sc .hd span{font-family:var(--mono);font-size:11px;color:var(--o)}
-.sc h4{margin:0 0 6px;font-family:var(--mono);font-weight:500;font-size:10.5px;letter-spacing:.1em;color:var(--muted)}
-.sc p{margin:0;font-size:14px;line-height:1.6;color:var(--text2)}
-.sc .th{color:var(--text);font-weight:600}.sc .th:before{content:attr(data-e);display:inline-block;margin-right:8px;padding:1px 8px;border:1px solid rgba(244,159,32,.45);border-radius:999px;font-size:11.5px;color:var(--o);vertical-align:1px}
-.sc a{display:block;font-size:13.5px;line-height:1.5;color:var(--text2);padding:5px 0;border-top:1px solid var(--line)}.sc a:first-of-type{border-top:0;padding-top:0}.sc a:hover{color:var(--o)}
-.sc .kp{font-family:var(--mono);font-size:12px;color:var(--o);line-height:1.6}
-table.mt{width:100%;border-collapse:collapse;font-size:15px;min-width:620px}
-.mt th,.mt td{padding:16px 18px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}.mt tr:last-child td{border-bottom:0}
-.mt th{font-family:var(--mono);font-weight:500;font-size:11.5px;letter-spacing:.08em;color:var(--muted)}
-.mt td:first-child{font-weight:700;white-space:nowrap}.mt td:nth-child(3){color:var(--o);font-weight:700;white-space:nowrap}.mt td:nth-child(4){color:var(--muted);font-size:13.5px}
-.nx{margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.nx div{border:1px solid var(--line);border-radius:16px;padding:22px;font-size:14.5px;line-height:1.65;color:var(--text2)}.nx b{display:block;color:var(--text);font-size:16px;margin-bottom:6px}
-@media (max-width:1100px){.pg{grid-template-columns:1fr 1fr}.series{grid-template-columns:1fr 1fr}.sg{grid-template-columns:1fr}.sc{display:grid;grid-template-columns:120px 1fr 1fr;gap:14px 20px}.sc .hd{grid-column:1/-1}}
-@media (max-width:760px){.pl-h{padding:40px 0 28px}.ps{padding-top:72px}.gap{font-size:17px;padding:22px}.pg{grid-template-columns:1fr}.series{grid-template-columns:1fr}
-.jm{padding:20px 14px 4px;border-radius:18px}.sx b{font-size:13px}.sx span{display:none}.sc{grid-template-columns:1fr}.nx{grid-template-columns:1fr}.yl{display:none}}
-@media print{:root{--bg:#fff;--panel:#fff;--panel2:#f3f3f3;--line:#ddd;--line2:#ccc;--text:#111;--text2:#333;--muted:#666;--o-soft:#fff6ea}
-.top,.drawer,.foot,.toc-p,.jt{display:none}.ps{padding-top:40px;break-inside:avoid}.pc,.sc,.jm{break-inside:avoid}}
-"""
-
-PLAN_JS = """
-var J=%%J%%,ST=%%S%%,cur=0,W=1000,H=260,X=function(i){return 100+i*200},Y=function(v){return 220-(v-1)*45},EM=['','막힘','답답','보통','안심','기대'];
-function curve(pts){var d='M'+pts[0][0]+','+pts[0][1];for(var i=0;i<pts.length-1;i++){var p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||p2;
- d+=' C'+(p1[0]+(p2[0]-p0[0])/6)+','+(p1[1]+(p2[1]-p0[1])/6)+' '+(p2[0]-(p3[0]-p1[0])/6)+','+(p2[1]-(p3[1]-p1[1])/6)+' '+p2[0]+','+p2[1]}return d}
-function pts(s){return s.map(function(v,i){return[X(i),Y(v)]})}
-function draw(){var p=J[cur],h='<defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F49F20" stop-opacity=".28"/><stop offset="1" stop-color="#F49F20" stop-opacity="0"/></linearGradient></defs>';
- for(var v=1;v<=5;v++)h+='<line x1="40" x2="960" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="currentColor" stroke-opacity=".09" stroke-dasharray="'+(v===3?'0':'4 6')+'"/>';
- J.forEach(function(o,k){if(k!==cur)h+='<path d="'+curve(pts(o.scores))+'" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-width="2"/>'});
- var c=curve(pts(p.scores));h+='<path d="'+c+' L'+X(4)+','+Y(1)+' L'+X(0)+','+Y(1)+' Z" fill="url(#ga)"/><path d="'+c+'" fill="none" stroke="#F49F20" stroke-width="4" stroke-linecap="round"/>';
- var lo=Math.min.apply(null,p.scores);
- p.scores.forEach(function(v,i){var w=EM[v].length*20+28,low=v===lo;
-  h+='<rect x="'+(X(i)-w/2)+'" y="'+(Y(v)-54)+'" width="'+w+'" height="32" rx="16" fill="'+(low?'#F49F20':'#0D0D0D')+'" stroke="#F49F20" stroke-opacity="'+(low?1:.45)+'"/>'
-   +'<text x="'+X(i)+'" y="'+(Y(v)-32)+'" text-anchor="middle" font-size="17" font-weight="700" fill="'+(low?'#0D0D0D':'#F49F20')+'">'+EM[v]+'</text>'
-   +'<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="'+(low?10:8)+'" fill="'+(low?'#F49F20':'#0D0D0D')+'" stroke="#F49F20" stroke-width="4"/>';
-  if(low)h+='<text x="'+X(i)+'" y="'+(Y(v)+40)+'" text-anchor="middle" font-size="17" fill="#F49F20" font-weight="600">가장 막히는 곳</text>'});
- document.querySelector('#jc').innerHTML=h;
- document.querySelector('#jc').setAttribute('aria-label',p.name+' '+p.role+'의 감정 곡선: '+p.scores.map(function(v,i){return ST[i]+' '+v+'점'}).join(', '));
- document.querySelectorAll('.jt button').forEach(function(b,k){b.setAttribute('aria-selected',k===cur)});
- document.querySelectorAll('.pc').forEach(function(b,k){b.classList.toggle('on',k===cur)});
- document.querySelectorAll('.th').forEach(function(t,i){t.textContent=p.thoughts[i];t.dataset.e=EM[p.scores[i]]});
- document.querySelector('#jw').textContent=p.name+' '+p.role}
-function pick(k,go){cur=k;draw();if(go)document.querySelector('#journey').scrollIntoView({behavior:'smooth'})}
-document.querySelectorAll('.jt button').forEach(function(b,k){b.addEventListener('click',function(){pick(k)})});
-document.querySelectorAll('.pc').forEach(function(b,k){b.addEventListener('click',function(ev){if(ev.target.closest('a'))return;pick(k,true)});
- b.addEventListener('keydown',function(ev){if((ev.key==='Enter'||ev.key===' ')&&ev.target===b){ev.preventDefault();pick(k,true)}})});
-draw();
-"""
-
-
-def build_plan(posts):
-    by = {p["slug"]: p for p in posts}
-
-    def link(slug):
-        p = by.get(slug)
-        return f'<a href="output/{slug}/preview.html">{esc(p["short"])}</a>' if p else ""
-
-    cmp_rows = "".join(
-        "<tr>" + f"<td>{esc(r[0])}</td>"
-        + "".join(f'<td class="{"me " if i == 0 else ""}{"no" if v == "없음" else ""}">{esc(v)}</td>' for i, v in enumerate(r[1:]))
-        + "</tr>" for r in COMPARE)
-    series = "".join(f'<div><span class="mono">{e}</span><b>{n}</b><p>{esc(d)}</p><span class="st">여정 · {SERIES_ROLE[k]}</span></div>' for k, n, e, d in CATS)
-    cards = "".join(
-        f'<div class="pc" role="button" tabindex="0" aria-label="{p["name"]} 여정 보기"><div class="av" aria-hidden="true">{p["name"][0]}</div>'
-        f'<h3>{p["name"]}</h3><div class="rl">{p["role"]}</div><div class="og">{p["org"]}</div><q>{esc(p["quote"])}</q>'
-        f'<dl><dt>고민</dt><dd>{esc(p["pain"])}</dd><dt>찾는 정보</dt><dd>{esc(p["need"])}</dd></dl>'
-        f'<div class="rd"><span class="mono">먼저 읽을 글</span>{"".join(link(s) for s in p["read"])}</div></div>' for p in PERSONAS)
-    tabs = "".join(f'<button type="button" role="tab">{p["name"]} · {p["role"]}</button>' for p in PERSONAS)
-    sx = "".join(f'<div><b>{i}. {n}</b><span>{e}</span></div>' for i, (n, e, *_) in enumerate(STAGES, 1))
-    act = '<a href="contact.html">문의하기</a><a href="index.html#newsletter">뉴스레터 구독</a>'
-    stages = "".join(
-        f'<div class="sc"><div class="hd"><b>{i}. {n}</b><span>{e}</span></div>'
-        f'<div><h4>고객 행동</h4><p>{esc(doing)}</p></div><div><h4>마음</h4><p class="th"></p></div>'
-        f'<div><h4>블로그가 줄 글</h4>{"".join(link(s) for s in slugs) or act}</div><div><h4>볼 지표</h4><p class="kp">{esc(kpi)}</p></div></div>'
-        for i, (n, e, doing, slugs, kpi) in enumerate(STAGES, 1))
-    metrics = "".join(f"<tr><td>{a}</td><td>{esc(b)}</td><td>{esc(c)}</td><td>{esc(d)}</td></tr>" for a, b, c, d in METRICS)
-
-    body = f"""<main class="wrap">
-<section class="pl-h"><div class="mono">PLANNING NOTE <span class="o">/</span> 솔트웨어 인사이트 블로그</div>
-<h1>블로그 기획 노트<span class="o">.</span></h1>
-<nav class="toc-p" aria-label="기획 노트 목차"><a href="#why"><span>01</span>만든 이유</a><a href="#persona"><span>02</span>퍼소나</a><a href="#journey"><span>03</span>고객여정지도</a><a href="#measure"><span>04</span>측정 계획</a></nav></section>
-
-<section class="ps" id="why"><span class="mono o">01 · WHY</span><h2>비어 있는 자리를 찾았습니다<span class="o">.</span></h2>
-<p class="lede">같은 클라우드 MSP 시장의 블로그 네 곳을 솔트웨어와 나란히 놓고 봤습니다. 솔트웨어의 기존 글 30편은 대부분 AWS 신제품 소식이었습니다.</p>
-<div class="gap"><span class="mono">빈자리</span>"회사에 쌓인 데이터를 AI가 쓸 수 있게 만드는 과정"을 실무 눈높이로 꾸준히 다루는 곳이 없습니다. Databricks, Starburst, Sapie를 모두 가진 솔트웨어가 가장 자연스럽게 쓸 수 있는 주제입니다.</div>
-<div class="tw"><table class="cmp"><thead><tr><th>기준</th><th class="me">솔트웨어 (기존)</th><th>GS네오텍</th><th>스마일샤크</th><th>베스핀글로벌</th></tr></thead><tbody>{cmp_rows}</tbody></table></div>
-<p class="note">2026.11.02 각 사 공식 블로그 공개 페이지 기준 · 클루커스, 메가존클라우드는 블로그 형태가 달라 표에서 뺐습니다.</p>
-<div class="series">{series}</div></section>
-
-<section class="ps" id="persona"><span class="mono o">02 · PERSONA</span><h2>이 블로그를 읽을 네 사람<span class="o">.</span></h2>
-<p class="lede">솔트웨어 홈페이지의 고객 사례와 현장 목소리를 바탕으로 잡았습니다. 카드를 누르면 아래 여정지도가 그 사람 기준으로 바뀝니다.</p>
-<div class="flag">⚠ 가설 퍼소나 · 실제 고객 인터뷰 전이며, 이름은 지어낸 것입니다</div>
-<div class="pg">{cards}</div></section>
-
-<section class="ps" id="journey"><span class="mono o">03 · JOURNEY MAP</span><h2>처음 알게 되고 문의하기까지<span class="o">.</span></h2>
-<p class="lede">B2B 고객이 거치는 다섯 단계와 단계마다 달라지는 마음을 곡선으로 그렸습니다. 지금 보는 사람: <b id="jw"></b>. 흐린 선은 나머지 세 사람입니다.</p>
-<div class="jm"><div class="jt" role="tablist" aria-label="퍼소나 고르기">{tabs}</div>
-<div class="chart"><div class="yl" aria-hidden="true"><span>좋음</span><span>막힘</span></div><svg id="jc" viewBox="0 0 1000 260" role="img" style="color:var(--text)"></svg></div>
-<div class="sx">{sx}</div></div>
-<div class="sg">{stages}</div></section>
-
-<section class="ps" id="measure"><span class="mono o">04 · MEASURE</span><h2>여정을 숫자로 확인합니다<span class="o">.</span></h2>
-<p class="lede">단계마다 하나씩 볼 지표를 정했습니다. 목표치는 운영 전 가정이고, 첫 3개월 실제 수치를 보고 다시 잡습니다.</p>
-<div class="tw"><table class="mt"><thead><tr><th>단계</th><th>지표</th><th>목표 (가정)</th><th>측정 방법</th></tr></thead><tbody>{metrics}</tbody></table></div>
-<div class="nx"><div><b>가장 막히는 곳부터</b>네 사람 모두 인지~비교 단계에서 곡선이 가장 낮습니다. 문제를 짚는 데이터 노트, 쉬운 해설(데이터 한 스푼), 솔루션 가이드를 먼저 늘립니다.</div>
-<div><b>사례가 확신을 만든다</b>모든 퍼소나의 곡선이 확신 단계에서 오릅니다. 글마다 같은 업종 사례로 가는 링크를 붙입니다.</div>
-<div><b>퍼소나 검증</b>문의 폼의 "어떤 글을 보고 오셨나요?" 답을 모아, 실제로 어떤 사람이 오는지 3개월 뒤 퍼소나를 고칩니다.</div></div></section>
-</main>"""
-    data = [{k: p[k] for k in ("name", "role", "scores", "thoughts")} for p in PERSONAS]
-    js = PLAN_JS.replace("%%J%%", json.dumps(data, ensure_ascii=False)).replace("%%S%%", json.dumps([s[0] for s in STAGES], ensure_ascii=False))
-    (ROOT / "plan.html").write_text(page("기획 노트 | 솔트웨어 인사이트", "", "plan", PLAN_CSS, body, js), encoding="utf-8")
-
-
 def build(posts):
     build_home(posts)
     for p in posts:
         build_post(p, posts)
     build_contact()
-    build_plan(posts)
