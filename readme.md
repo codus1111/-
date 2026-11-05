@@ -53,30 +53,30 @@
 리서치 → 글쓰기 → 이미지 → 조립으로 역할을 나누어 블로그 제작 과정을 구성했습니다.
 데이터 한 스푼 3편, 데이터 노트 4편, 고객 사례 5편으로 **총 12편의 콘텐츠**를 제작했습니다.
 
-**[↗ 완성 콘텐츠 모음](https://github.com/codus1111/-/tree/main/codus1111/saltware-blog/output)** &nbsp; · &nbsp;
-**[블로그 시안 파일](https://github.com/codus1111/-/blob/main/codus1111/saltware-blog/index.html)**
+**[↗ 완성 콘텐츠 모음](https://chaeyeon-saltware-insights.day1companyk-6083.chatgpt.site/#archive)** &nbsp; · &nbsp;
+**[블로그 화면 보기](https://chaeyeon-saltware-insights.day1companyk-6083.chatgpt.site/)**
 
 <details>
 <summary><strong>완성된 글 12편 바로 읽기</strong></summary>
 
 | 콘텐츠 | 결과물 |
 | :--- | :--- |
-| AI 에이전트 권한 | [글 읽기](https://github.com/codus1111/-/blob/main/codus1111/saltware-blog/output/agent-permission/final.md) |
-| 빅데이터 이야기 | [글 읽기](https://github.com/codus1111/-/blob/main/codus1111/saltware-blog/output/bigdata-short-story/final.md) |
-| 제조업 AI 격차 | [글 읽기](https://github.com/codus1111/-/blob/main/codus1111/saltware-blog/output/manufacturing-ai-gap/final.md) |
-| 하이브리드 클라우드 | [글 읽기](https://github.com/codus1111/-/blob/main/codus1111/saltware-blog/output/hybrid-cloud/final.md) |
-| 레이크하우스 | [글 읽기](https://github.com/codus1111/-/blob/main/codus1111/saltware-blog/output/lakehouse/final.md) |
-| 실시간 데이터 처리 | [글 읽기](https://github.com/codus1111/-/blob/main/codus1111/saltware-blog/output/realtime-kinesis/final.md) |
-| 리전과 가용 영역 | [글 읽기](https://github.com/codus1111/-/blob/main/codus1111/saltware-blog/output/region-az/final.md) |
-| 백패커 사례 | [글 읽기](https://github.com/codus1111/-/blob/main/codus1111/saltware-blog/output/case-backpacker/final.md) |
-| 금융 사례 | [글 읽기](https://github.com/codus1111/-/blob/main/codus1111/saltware-blog/output/case-finance-10y/final.md) |
-| 크몽 사례 | [글 읽기](https://github.com/codus1111/-/blob/main/codus1111/saltware-blog/output/case-kmong/final.md) |
-| 리파인 사례 | [글 읽기](https://github.com/codus1111/-/blob/main/codus1111/saltware-blog/output/case-refine/final.md) |
-| 연성대학교 사례 | [글 읽기](https://github.com/codus1111/-/blob/main/codus1111/saltware-blog/output/case-yeonsung/final.md) |
+| AI 에이전트 권한 | [글 읽기](https://chaeyeon-saltware-insights.day1companyk-6083.chatgpt.site/output/agent-permission/preview.html) |
+| 빅데이터 이야기 | [글 읽기](https://chaeyeon-saltware-insights.day1companyk-6083.chatgpt.site/output/bigdata-short-story/preview.html) |
+| 제조업 AI 격차 | [글 읽기](https://chaeyeon-saltware-insights.day1companyk-6083.chatgpt.site/output/manufacturing-ai-gap/preview.html) |
+| 하이브리드 클라우드 | [글 읽기](https://chaeyeon-saltware-insights.day1companyk-6083.chatgpt.site/output/hybrid-cloud/preview.html) |
+| 레이크하우스 | [글 읽기](https://chaeyeon-saltware-insights.day1companyk-6083.chatgpt.site/output/lakehouse/preview.html) |
+| 실시간 데이터 처리 | [글 읽기](https://chaeyeon-saltware-insights.day1companyk-6083.chatgpt.site/output/realtime-kinesis/preview.html) |
+| 리전과 가용 영역 | [글 읽기](https://chaeyeon-saltware-insights.day1companyk-6083.chatgpt.site/output/region-az/preview.html) |
+| 백패커 사례 | [글 읽기](https://chaeyeon-saltware-insights.day1companyk-6083.chatgpt.site/output/case-backpacker/preview.html) |
+| 금융 사례 | [글 읽기](https://chaeyeon-saltware-insights.day1companyk-6083.chatgpt.site/output/case-finance-10y/preview.html) |
+| 크몽 사례 | [글 읽기](https://chaeyeon-saltware-insights.day1companyk-6083.chatgpt.site/output/case-kmong/preview.html) |
+| 리파인 사례 | [글 읽기](https://chaeyeon-saltware-insights.day1companyk-6083.chatgpt.site/output/case-refine/preview.html) |
+| 연성대학교 사례 | [글 읽기](https://chaeyeon-saltware-insights.day1companyk-6083.chatgpt.site/output/case-yeonsung/preview.html) |
 
 </details>
 
-<sub>콘텐츠 기획 · SEO · AI 에이전트 · HTML / 블로그는 학습용 시안입니다.<br>글은 GitHub에서 바로 읽을 수 있습니다. 블로그 시안 HTML은 다운로드 후 브라우저에서 열어볼 수 있습니다.</sub>
+<sub>콘텐츠 기획 · SEO · AI 에이전트 · HTML / 블로그는 학습용 시안입니다.<br>글은 GitHub에서 바로 읽을 수 있습니다. 블로그 화면 보기은 다운로드 후 브라우저에서 열어볼 수 있습니다.</sub>
 
 ---
 
