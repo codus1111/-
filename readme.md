@@ -24,6 +24,7 @@
 
 *오차는 5겹 교차검증의 평균 절대 오차율입니다. 서비스는 저연봉 구간을 고려한 별도 혼합 보정을 사용하며, AI 평가는 28문항을 한 번씩 실행한 결과입니다.*
 
+**[↗ 포트폴리오 보기](https://chaeyeon-saltware-insights.day1companyk-6083.chatgpt.site/salary-portfolio.html)** &nbsp; · &nbsp;
 **[↗ 서비스 사용하기](https://yeon-salary-agent.streamlit.app)** &nbsp; · &nbsp;
 **[분석 과정과 핵심 성과](https://github.com/codus1111/pension-salary#readme)** &nbsp; · &nbsp;
 **[결과 차트](https://github.com/codus1111/pension-salary/tree/main/reports/figures)**
